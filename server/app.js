@@ -2,8 +2,6 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
-require('app-module-path').addPath(__dirname);
-
 const app = express();
 
 // Setup logger
@@ -11,6 +9,15 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
+app.use(function(err, req, res, next) {
+    if (app.get('env') == 'development') {
+        var errorHandler = express.errorHandler();
+        errorHandler(err, req, res, next);
+    } else {
+        res.send(500);
+    }
+});
 
 // Always return the main index.html, so react-router render the route in the client
 app.get('*', (req, res) => {

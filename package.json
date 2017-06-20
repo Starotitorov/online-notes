@@ -10,9 +10,11 @@
     "faker": "^4.1.0",
     "mongoose": "^4.10.7",
     "morgan": "^1.8.2",
+    "nconf": "^0.8.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-router": "^3.0.5"
+    "react-router": "^3.0.5",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"
