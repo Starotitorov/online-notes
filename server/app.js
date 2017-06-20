@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
+require('app-module-path').addPath(__dirname);
+
 const app = express();
 
 // Setup logger
