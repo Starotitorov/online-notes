@@ -7,6 +7,12 @@ const config = require('config');
 
 const apiRoutes = express.Router();
 
+function generateJwt(payload) {
+    return jwt.sign(payload, config.get('secret'), {
+        expiresIn : 86400 // expires in 24 hours
+    });
+}
+
 apiRoutes.post('/signin', (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -20,15 +26,44 @@ apiRoutes.post('/signin', (req, res, next) => {
             }
         }
 
-        const token = jwt.sign(user, config.get('secret'), {
-            expiresIn : 86400 // expires in 24 hours
-        });
         res.json(
             200,
             {
-                token: token,
+                token: generateJwt({ id: user.id }),
                 user: {
-                    id: user._id,
+                    id: user.id,
+                    email: user.email
+                }
+            }
+        );
+    });
+});
+
+apiRoutes.post('/signup', (req, res, next) => {
+    if (!req.body.email || !req.body.password || !req.body.passwordConfirmation) {
+        return next(new HttpError(422, 'Please pass all credentials.'));
+    }
+
+    if (req.body.password !== req.body.passwordConfirmation) {
+        return next(new HttpError(422, 'Password confirmation does not match password.'));
+    }
+
+    const newUser = new User({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    newUser.save((err, user) => {
+        if (err) {
+            return next(new HttpError(409, 'Email has already been taken.'));
+        }
+
+        res.json(
+            200,
+            {
+                token: generateJwt({ id: user.id }),
+                user: {
+                    id: user.id,
                     email: user.email
                 }
             }

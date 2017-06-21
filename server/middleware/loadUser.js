@@ -2,6 +2,7 @@ const User = require('models/user').User;
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const async = require('async');
+const HttpError = require('error').HttpError;
 
 module.exports = function(req, res, next) {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -15,14 +16,18 @@ module.exports = function(req, res, next) {
         (callback) => {
             jwt.verify(token, config.get('secret'), (err, decodedToken) => {
                 if (err) {
-                    callback(new HttpError(400, 'Failed to authenticate token.'));
+                    if (err instanceof jwt.TokenExpiredError) {
+                        callback(new HttpError(400, 'Token expired.'));
+                    } else {
+                        callback(new HttpError(400, 'Failed to authenticate token.'));
+                    }
                 } else {
                     callback(null, decodedToken);
                 }
             });
         },
         (decodedToken, callback) => {
-            User.findOne({ _id: decodedToken._id }, callback);
+            User.findOne({ id: decodedToken.id }, callback);
         },
         (user, callback) => {
             if (user) {
