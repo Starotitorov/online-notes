@@ -32,11 +32,20 @@ function requireModels(callback) {
 }
 
 function createUsers(callback) {
-    async.times(10, function(userData, callback) {
-        const user = new mongoose.models.User({
+    const users = [{
+        email: 'starotitorov1997@gmail.com',
+        password: 'artem1997'
+    }];
+
+    for (let i = 0; i < 10; ++i) {
+        users.push({
             email: faker.internet.email(),
             password: faker.internet.password()
         });
+    }
+
+    async.each(users, function(userData, callback) {
+        const user = new mongoose.models.User(userData);
         user.save(callback);
     }, callback);
 }
