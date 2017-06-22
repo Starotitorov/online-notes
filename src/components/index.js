@@ -1,13 +1,20 @@
 import React from 'react';
-import './index.css';
+import './index.scss';
 
 export const App = ({ children }) =>
     <div className="app">
         {children}
     </div>;
 
-export const Whoops404 = ({ location }) =>
-    <div className="whoops-404">
-        <h1>Whoops, route not found</h1>
-        <p>Cannot find content for {location.pathname}</p>
+export const Whoops404 = () =>
+    <div className="nb-error">
+        <div className="error-code">404</div>
+        <h3 className="font-bold">We couldn't find the page..</h3>
+
+        <div className="error-desc">
+            Sorry, but the page you are looking for was either not found or does not exist.
+            <div className="text-center">
+                <p>Online notes, by <a href="https://github.com/Starotitorov">Starotitorov</a>.</p>
+            </div>
+        </div>
     </div>;
