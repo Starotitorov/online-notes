@@ -23,7 +23,7 @@ const Home = () =>
                     <h1 className="cover-heading">Online notes</h1>
                     <p className="lead">Online notes is a simple service for creating and editing notes online. Your notes stay updated across all your devices. No buttons to press. It just works. You are able to find notes quickly with instant searching.</p>
                     <p className="lead">
-                        <Link to="/singup" className="btn btn-lg btn-secondary">
+                        <Link to="/signup" className="btn btn-lg btn-secondary">
                             Create an account now
                         </Link>
                     </p>
