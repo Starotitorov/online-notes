@@ -3,4 +3,5 @@ import appReducer from './reducers';
 import thunk from 'redux-thunk';
 
 export default (initialState = {}) =>
-    applyMiddleware(thunk)(appReducer, initialState);
+    applyMiddleware(thunk)(createStore)(appReducer, initialState);
+
