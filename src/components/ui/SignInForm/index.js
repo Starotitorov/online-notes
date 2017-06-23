@@ -13,7 +13,9 @@ export default class SignInForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit() {
+    handleSubmit(e) {
+        e.preventDefault();
+
         const email = this.emailInput.value;
         const password = this.passwordInput.value;
 

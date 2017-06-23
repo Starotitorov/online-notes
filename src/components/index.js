@@ -1,8 +1,10 @@
 import React from 'react';
+import ErrorsList from './containers/ErrorsList';
 import './index.scss';
 
 export const App = ({ children }) =>
     <div className="app">
+        <ErrorsList/>
         {children}
     </div>;
 

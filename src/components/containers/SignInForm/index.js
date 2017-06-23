@@ -1,8 +1,8 @@
-import SignInForm from '../ui/SignInForm';
+import SignInForm from '../../ui/SignInForm/index';
 import { connect } from 'react-redux';
-import { signInUser } from '../../actions';
+import { signInUser } from '../../../actions';
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state, props) => ({});
 
 const mapDispatchToProps = (dispatch) =>
     ({
